@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>NeverNote</title>
+<link rel="stylesheet" type="text/css" href="jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="nevernote.css" />
+<script src="jscache.js"></script>
+<script>
+function loadjs() {
+	jsload("jquery.js");
+	jsload("jquery-ui.js");
+	jsload("nevernote.js");
+}
+</script>
+</head>
+<body onload="loadjs()">
+<div id="banner">
+	NeverNote v2
+</div>
+<div id="debugfunc">
+</div>
+<div id="notelist">
+	<div id="notelist_content"></div>
+	<button id="btn_add">Add</button>
+</div>
+<div id="noteview">
+	<b>Title:</b> <span id="noteview_title"></span>
+	<hr />
+	<div id="noteview_content"></div>
+</div>
+<div id="noteadd">
+	Title: <input id="noteadd_title" />
+	<hr />
+	<textarea id="noteadd_content" cols="70" rows="15"></textarea>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+body {
+	background-color: rgb(240, 255, 240);
+}
+
+#desktop {
+	width: 100%;
+	height: 100%;
+}
+
+#btn_add {
+	position: absolute;
+	bottom: 20px;
+}
+
+#banner {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	font-family: sans-serif;
+	font-size: 72px;
+	color: silver;
+}

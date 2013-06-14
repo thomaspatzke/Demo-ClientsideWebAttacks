@@ -1,0 +1,94 @@
+Clientside Vulnerabilities Demo App
+===================================
+
+This little project contains a vulnerable application (NeverNote) and
+attacks against it for demonstration purposes. I use it to demonstrate
+some clientside web application attacks, particullary:
+
+- DOM-based XSS
+
+- Peristence of JavaScript-based malware in code cached in the LocalStorage
+
+- Clickjacking
+
+Usage
+-----
+
+Put the files on a web server or start lighttpd with the provided
+configuration file (adapt web root!) from the root directory of this
+project. I use this command line:
+
+lighttpd -f lighttpd.conf -D
+
+With the provided files the following demonstration apps/pages can be used:
+
+- http://localhost:8000/nevernote/v1/nevernote.html: Vulnerable version of demo app
+
+  * Note viewer is vulnerable against DOM-based XSS, e.g. add the following payload:
+
+    <img src=x onerror=alert(document.domain)>
+
+  * Has fast-add feature by URL fragment:
+
+    http://...#<title>###<content>
+
+    Do you see a random token? ;-)
+
+  * Click on app-banner in bottom right corner to access some debug functionality.
+
+- http://localhost:8000/nevernote/v2/nevernote.html: Not vulnerable
+  against DOM-based XSS. But infection previously done in v1 is still
+  present until cache is cleaned.
+
+- http://localhost:8000/attacker/attack.html: Add DOMXSS payload by fast-note
+
+- http://localhost:8000/attacker/infect.html: Add note with XSS
+  payload that "infects" apps locally cached JS
+
+- http://localhost:8000/attacker/infect.js: Infect payload used by
+  infect.html - it adds some code to locally cached JS of nevernote.js
+  which submits newly added notes to logger.
+
+- http://localhost:8000/attacker/logger.py: Logs value of parameter
+  msg in log/<parameter apps>.log
+
+- http://localhost:8000/attacker/clickjacking.html: a clickjacking
+  attack against the note app. The click point "X" is above the
+  transparent frame at loading time but drops below on mouseover
+  event. After five seconds a message appears that the user won. The
+  click point is placed on the delete button of the first note. If the
+  user clicks fast on it as instructed, many notes are deleted. Verify
+  position of click point before live demos! It may be displaced on
+  some resolutions/conditions.
+
+Demonstration
+-------------
+
+This app shows:
+
+- (locally stored) DOM-based XSS.
+
+- Why browser local storages of users must be considered as
+  compromised after a XSS vulnerability was present. And why it is a
+  bad idea to cache JavaScript code manually in the local storage.
+
+- Why fixes must also consider the client side.
+
+- Clickjacking
+
+License
+-------
+Copyright 2013 Thomas Skora <thomas@skora.net>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
